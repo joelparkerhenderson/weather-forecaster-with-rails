@@ -141,3 +141,81 @@ Run:
 ```sh
 bundle
 ```
+
+
+### Generate forecasts controller
+
+Generate a forecasts controller and its tests:
+
+```sh
+% bin/rails generate controller forecasts show
+```
+
+Write a test in `test/controllers/forecasts_controller_test.rb`:
+
+```ruby
+require "test_helper"
+
+class ForecastControllerTest < ActionDispatch::IntegrationTest
+
+  test "show with an input address" do
+    address = Faker::Address.full_address
+    get forecasts_show_url, params: { address: address }
+    assert_response :success
+    assert_equal address, session[:address]
+  end
+
+end
+```
+
+Generate a system test that will launch the web page, and provide the correct placeholder for certain future work:
+
+```
+% bin/rails generate system_test forecasts
+```
+
+Write a test in `test/system/forecasts_test.rb`:
+
+```ruby
+require "application_system_test_case"
+
+class ForecastsTest < ApplicationSystemTestCase
+
+  test "show" do
+    address = Faker::Address.full_address
+    visit url_for \
+      controller: "forecasts", 
+      action: "show", 
+      params: { 
+        address: address 
+      }
+    assert_selector "h1", text: "Forecasts#show"
+  end
+
+end
+```
+
+TDD should fail:
+
+```sh
+% bin/rails test:all
+```
+
+Implement in `app/controllers/forecasts_controller.rb`:
+
+
+```ruby
+class ForecastsController < ApplicationController
+
+  def show
+    session[:address] = params[:address]
+  end
+
+end
+```
+
+TDD should succeed:
+
+```sh
+% bin/rails test:all
+```
