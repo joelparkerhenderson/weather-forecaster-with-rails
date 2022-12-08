@@ -350,3 +350,30 @@ class GeocodeService
 
 end
 ```
+
+
+## Join OpenWeather API
+
+Sign up at <https://openweathermap.org>
+
+* The process creates your API key.
+
+Example:
+
+* OpenWeather API key: 70a6c8131f03fe7a745b6b713ed9ebfd
+
+
+
+### Set OpenWeather API credentials
+
+Edit Rails credentials:
+
+```sh
+EDITOR="code --wait"  bin/rails credentials:edit
+```
+
+Add your OpenWeather credentials by replacing these fake credentials with your real credentials:
+
+```ruby
+openweather_api_key: 70a6c8131f03fe7a745b6b713ed9ebfd
+```
