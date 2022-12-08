@@ -97,3 +97,23 @@ Create a new Ruby on Rails app and test it:
 % lsof -ti:3000 | xargs kill -9
 ```
 
+
+### Add flash
+
+I like to use Rails flash messages to show the user notices, alerts, and the like. I use some simple CSS to make the styling easy.
+
+Add flash messages that are rendered via a view partial:
+
+```sh
+% mkdir app/views/shared
+```
+
+Create `app/views/shared/_flash.html.erb`:
+
+```ruby
+<% flash.each do |type, message| %>
+  <div class="flash flash-<% type %>">
+    <%= message %>
+  </div>
+<% end %>
+```
