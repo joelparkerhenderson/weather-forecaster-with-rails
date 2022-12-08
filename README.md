@@ -248,3 +248,20 @@ Run:
 % mkdir -p {app,test}/services
 % touch {app,test}/services/.keep
 ```
+
+
+### Set ArcGIS API credentials
+
+Edit Rails credentials:
+
+```sh
+EDITOR="code --wait"  bin/rails credentials:edit
+```
+
+Add your ArcGIS credentials by replacing these fake credentials with your real credentials:
+
+```ruby
+arcgis_api_user_id: alice
+arcgis_api_secret_key: 6d9ecd1c-2b00-4a0e-89d7-8f250418a9c4
+```
+
