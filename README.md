@@ -299,3 +299,54 @@ Geocoder.configure(
     }
 )
 ```
+
+
+### Create GeocodeService
+
+We want to create a geocode service that converts from an address string into a latitude, longitude, country code, and postal code.
+
+Create `test/services/geocode_service_test`:
+
+```ruby
+require 'test_helper'
+
+class GeocodeServiceTest < ActiveSupport::TestCase
+
+  test "call with known address" do
+    address = "1 Infinite Loop, Cupertino, California"
+    geocode = GeocodeService.call(address)
+    assert_in_delta 37.33, geocode.latitude, 0.1
+    assert_in_delta -122.03, geocode.longitude, 0.1
+    assert_equal "us", geocode.country_code
+    assert_equal "95014", geocode.postal_code
+  end
+
+end
+```
+
+Create `app/services/geocode_service`:
+
+```ruby
+class GeocodeService 
+
+  def self.call(address)
+    response = Geocoder.search(address)
+    response or raise IOError.new "Geocoder error"
+    response.length > 0 or raise IOError.new "Geocoder is empty: #{response}"
+    data = response.first.data
+    data or raise IOError.new "Geocoder data error"
+    data["lat"] or raise IOError.new "Geocoder latitude is missing"
+    data["lon"] or raise IOError.new "Geocoder longitude is missing"
+    data["address"] or raise IOError.new "Geocoder address is missing" 
+    data["address"]["country_code"] or raise IOError.new "Geocoder country code is missing"
+    data["address"]["postcode"] or raise IOError.new "Geocoder postal code is missing" 
+    geocode = OpenStruct.new
+    geocode.latitude = data["lat"].to_f
+    geocode.longitude = data["lon"].to_f
+    geocode.country_code = data["address"]["country_code"]
+    geocode.postal_code = data["address"]["postcode"]
+    geocode
+  end
+
+end
+```
