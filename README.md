@@ -377,3 +377,22 @@ Add your OpenWeather credentials by replacing these fake credentials with your r
 ```ruby
 openweather_api_key: 70a6c8131f03fe7a745b6b713ed9ebfd
 ```
+
+
+### Add Faraday gems
+
+Ruby has many excellent ways to do HTTP API requests. I prefer the Faraday gem because it tends to provide the most power and the most capabilities, such as for asynchronous programming.
+
+Edit `Gemfile` and add:
+
+```ruby
+# Simple flexible HTTP client library, with support for multiple backends.
+gem "faraday"
+gem "faraday_middleware"
+```
+
+Run:
+
+```sh
+bundle
+```
