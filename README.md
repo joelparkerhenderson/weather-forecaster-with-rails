@@ -462,3 +462,37 @@ class WeatherService
 end
 ```
 
+
+## Complete the app
+
+In the interest of time, I'll complete the app by doing the forecasts controller and view. Use of TDD and/or step-by-step additions are shown above, so are elided below.
+
+
+### Complete the forecasts controller
+
+
+Complete `app/controllers/forecasts_controller`:
+
+```ruby
+class ForecastsController < ApplicationController
+
+  def show
+    @address_default = "1 Infinite Loop, Cupertino, California"
+    session[:address] = params[:address]
+    if params[:address]
+      begin
+        @address = params[:address]
+        @geocode = GeocodeService.call(@address)
+        @weather_cache_key = "#{@geocode.country_code}/#{@geocode.postal_code}"
+        @weather_cache_exist = Rails.cache.exist?(@weather_cache_key)
+        @weather = Rails.cache.fetch(@weather_cache_key, expires_in: 30.minutes) do
+          WeatherService.call(@geocode.latitude, @geocode.longitude)          
+        end
+      rescue => e
+        flash.alert = e.message
+      end
+    end
+  end
+
+end
+```
