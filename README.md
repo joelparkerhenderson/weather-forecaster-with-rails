@@ -496,3 +496,39 @@ class ForecastsController < ApplicationController
 
 end
 ```
+
+
+### Complete the forecasts view
+
+Complete `app/views/forecasts/show.html.erb`:
+
+
+```erb
+<%= render "shared/flash" %>
+
+<h1>Forecast</h1>
+
+<%= form_with(method: 'get', local: true) do %>
+    <%= label :address, "What is your address?" %><br>
+    <%= text_field_tag(:address, @address || @address_default, size: 70) %><br>
+    <%= submit_tag("Lookup") %>
+<% end %>
+
+<% if defined?(@weather) %>
+    <ul>
+        <li>Temperature: <%= @weather.temperature %> ℃</li>
+        <li>Temperature Minimum: <%= @weather.temperature_min %> ℃</li>
+        <li>Temperature Maximum: <%= @weather.temperature_max %> ℃</li>
+        <li>Humidity: <%= @weather.humidity %>%</li>
+        <li>Pressure: <%= @weather.pressure %> millibars</li>
+        <li>Description: <%= @weather.description %></li>
+        <li>Is this result from the cache? <%= @weather_cache_exist %>
+    </ul>
+<% end %>
+```
+
+Update `test/system/forecasts_test.rb`:
+
+```ruby
+assert_selector "h1", text: "Forecast"
+```
