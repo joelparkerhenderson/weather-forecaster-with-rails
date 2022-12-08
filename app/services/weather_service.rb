@@ -17,7 +17,7 @@ class WeatherService
     body["main"] or raise IOError.new "OpenWeather main section is missing"
     body["main"]["temp"] or raise IOError.new "OpenWeather temperature is missing"
     body["main"]["temp_min"] or raise IOError.new "OpenWeather temperature minimum is missing"
-    body["main"]["temp_max"] or raise IOError.new "OpenWeather temperature minimum is missing"
+    body["main"]["temp_max"] or raise IOError.new "OpenWeather temperature maximum is missing"
     body["weather"] or raise IOError.new "OpenWeather weather section is missing"
     body["weather"].length > 0 or raise IOError.new "OpenWeather weather section is empty"
     body["weather"][0]["description"] or raise IOError.new "OpenWeather weather description is missing"
