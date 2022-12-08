@@ -117,3 +117,27 @@ Create `app/views/shared/_flash.html.erb`:
   </div>
 <% end %>
 ```
+
+
+## Accept an address as input
+
+We want a controller can accept an address as an input parameter. 
+
+A simple way to test this is by saving the address in the session.
+
+
+### Add faker gem
+
+To create test data, we can use the `faker` gem, which can create fake addresses.
+
+Edit `Gemfile` and its `test` section to add the `faker` gem:
+
+```ruby
+gem "faker"
+```
+
+Run:
+
+```sh
+bundle
+```
