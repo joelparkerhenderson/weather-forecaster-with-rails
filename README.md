@@ -532,3 +532,30 @@ Update `test/system/forecasts_test.rb`:
 ```ruby
 assert_selector "h1", text: "Forecast"
 ```
+
+
+### Enable the cache
+
+Enable the Rails development cache, so a developer can see that the forecasts are cached as expected.
+
+
+```sh
+bin/rails dev:cache
+```
+
+
+## Conclusion
+
+The app now works successfully:
+
+```sh
+% bin/rails test
+% bin/rails test:system
+% bin/rails server -d
+```
+
+Browse to <http://127.0.0.1:3000>
+
+I hope you've enjoyed seeing this app. It's a quick demonstration of Ruby on Rails, Test Driven Development, API access using a specialized gem (i.e. geocoder) and a generalized gem (i.e. faraday).
+
+
