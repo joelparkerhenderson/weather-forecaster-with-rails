@@ -559,3 +559,18 @@ Browse to <http://127.0.0.1:3000>
 I hope you've enjoyed seeing this app. It's a quick demonstration of Ruby on Rails, Test Driven Development, API access using a specialized gem (i.e. geocoder) and a generalized gem (i.e. faraday).
 
 
+
+
+
+## Appendix
+
+
+### Unicode
+
+Unicode characters that can help the app display the temperature units:
+
+```txt
+U+2103 ℃ DEGREE CELSIUS
+
+U+2109 ℉ DEGREE FAHRENHEIT
+```
