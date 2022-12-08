@@ -112,7 +112,7 @@ Create `app/views/shared/_flash.html.erb`:
 
 ```ruby
 <% flash.each do |type, message| %>
-  <div class="flash flash-<% type %>">
+  <div class="flash flash-<%= type %>">
     <%= message %>
   </div>
 <% end %>
