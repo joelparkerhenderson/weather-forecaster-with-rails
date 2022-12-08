@@ -265,3 +265,20 @@ arcgis_api_user_id: alice
 arcgis_api_secret_key: 6d9ecd1c-2b00-4a0e-89d7-8f250418a9c4
 ```
 
+
+### Add Geocoder gem
+
+Ruby has an excellent way to access the ArcGIS API, by using the Geocoder gem, and configuring it for the ArcGIS API.
+
+Edit `Gemfile` to add:
+
+```ruby
+# Look up a map address and convert it to latitude, longitude, etc.
+gem "geocoder"
+```
+
+Run:
+
+```sh
+bundle
+```
