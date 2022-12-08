@@ -574,3 +574,82 @@ U+2103 ℃ DEGREE CELSIUS
 
 U+2109 ℉ DEGREE FAHRENHEIT
 ```
+
+
+### OpenAI ChatGPT comparison
+
+I'm currently experimenting with AI/ML for programming, such as with GitHub Copilot and OpenAI ChatGPT.
+
+The OpenAI ChatGPT is notable, in my opinion, because it gets in the right ballpark of what Ruby on Rails code could look like, but it doesn't actually run, and doesn't create services, or API credentials, etc.
+
+I believe AI/ML is a promising area to explore, so I'm including this appendix section that shows the OpenAI ChatGPT reply to the original requirements documentation.
+
+ChatGPT says:
+
+* In this implementation, the ForecastController's show action accepts an address as input and retrieves the forecast data for that address using the Forecast.for_address class method. 
+
+* This method uses Rails' built-in caching mechanism to store the forecast data in memory for 30 minutes, so that subsequent requests for the same address will not have to hit the weather API again and can instead return the cached data. 
+
+* The from_cache attribute of the Forecast object is set to true if the data was retrieved from the cache. The controller then renders the forecast data as a JSON object, including the current temperature, high and low temperatures, extended forecast, and a from_cache flag indicating whether the data was retrieved from the cache or not.
+
+```ruby
+# app/controllers/forecast_controller.rb
+class ForecastController < ApplicationController
+  def show
+    # Accept an address as input
+    address = params[:address]
+
+    # Retrieve forecast data for the given address
+    forecast = Forecast.for_address(address)
+
+    # Display the requested forecast details to the user
+    render json: {
+      current_temperature: forecast.current_temperature,
+      high: forecast.high,
+      low: forecast.low,
+      extended_forecast: forecast.extended_forecast,
+      from_cache: forecast.from_cache
+    }
+  end
+end
+```
+
+
+```ruby
+# app/models/forecast.rb
+class Forecast
+  CACHE_EXPIRATION = 30.minutes
+
+  attr_reader :current_temperature, :high, :low, :extended_forecast, :from_cache
+
+  def initialize(attributes)
+    @current_temperature = attributes[:current_temperature]
+    @high = attributes[:high]
+    @low = attributes[:low]
+    @extended_forecast = attributes[:extended_forecast]
+    @from_cache = attributes[:from_cache]
+  end
+
+  def self.for_address(address)
+    Rails.cache.fetch("forecast-#{address}", expires_in: CACHE_EXPIRATION) do
+      # Retrieve the forecast data from a weather API or other source
+      forecast_data = retrieve_forecast_data(address)
+
+      # Create a Forecast object with the retrieved data
+      new(
+        current_temperature: forecast_data[:current_temperature],
+        high: forecast_data[:high],
+        low: forecast_data[:low],
+        extended_forecast: forecast_data[:extended_forecast],
+        from_cache: false
+      )
+    end
+  end
+
+  private
+
+  def self.retrieve_forecast_data(address)
+    # Code to retrieve forecast data from a weather API or other source
+  end
+end
+```
