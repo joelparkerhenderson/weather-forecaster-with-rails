@@ -229,3 +229,22 @@ Edit `config/routes.rb`:
 # Defines the root path route ("/")
 root "forecasts#show"
 ```
+
+
+
+## Get forecast data for the given address
+
+There are many ways we could get forecast data. 
+
+* We choose to convert the address to a latitude and longitude, by using the geocoder gem and the ESRI ArcGIS API available [here](https://developers.arcgis.com/sign-up/)
+
+* We choose to send the latitude and longitude to the OpenWeatherMap API available [here](https://openweathermap.com)
+
+* We choose to implement each API as an application service, by creating a plain old Ruby object (PORO) in the directory `app/services`
+
+Run:
+
+```sh
+% mkdir -p {app,test}/services
+% touch {app,test}/services/.keep
+```
