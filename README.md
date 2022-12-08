@@ -219,3 +219,13 @@ TDD should succeed:
 ```sh
 % bin/rails test:all
 ```
+
+
+### Set the root path route
+
+Edit `config/routes.rb`:
+
+```ruby
+# Defines the root path route ("/")
+root "forecasts#show"
+```
