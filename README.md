@@ -396,3 +396,69 @@ Run:
 ```sh
 bundle
 ```
+
+
+### Create WeatherService
+
+Create `test/services/weather_service_test.rb`:
+
+```ruby
+require 'test_helper'
+
+class WeatherServiceTest < ActiveSupport::TestCase
+
+  test "call with known parameters" do
+    # Example address is 1 Infinite Loop, Cupertino, California
+    latitude = 37.331669
+    longitude = -122.030098 
+    weather = WeatherService.call(latitude, longitude)
+    assert_includes -4..44, weather.temperature
+    assert_includes -4..44, weather.temperature_min
+    assert_includes -4..44, weather.temperature_max
+    assert_includes 0..100, weather.humidity
+    assert_includes 900..1100, weather.pressure
+    refute_empty weather.description
+  end
+
+end
+```
+
+Create `app/services/weather_service.rb`:
+
+```ruby
+class WeatherService
+    
+  def self.call(latitude, longitude)
+    conn = Faraday.new("https://api.openweathermap.org") do |f|
+      f.request :json # encode req bodies as JSON and automatically set the Content-Type header
+      f.request :retry # retry transient failures
+      f.response :json # decode response bodies as JSON
+    end    
+    response = conn.get('/data/2.5/weather', {
+      appid: Rails.application.credentials.openweather_api_key,
+      lat: latitude,
+      lon: longitude,
+      units: "metric",
+    })
+    body = response.body
+    body or raise IOError.new "OpenWeather response body failed"
+    body["main"] or raise IOError.new "OpenWeather main section is missing"
+    body["main"]["temp"] or raise IOError.new "OpenWeather temperature is missing"
+    body["main"]["temp_min"] or raise IOError.new "OpenWeather temperature minimum is missing"
+    body["main"]["temp_max"] or raise IOError.new "OpenWeather temperature minimum is missing"
+    body["weather"] or raise IOError.new "OpenWeather weather section is missing"
+    body["weather"].length > 0 or raise IOError.new "OpenWeather weather section is empty"
+    body["weather"][0]["description"] or raise IOError.new "OpenWeather weather description is missing"
+    weather = OpenStruct.new
+    weather.temperature = body["main"]["temp"]
+    weather.temperature_min = body["main"]["temp_min"]
+    weather.temperature_max = body["main"]["temp_max"]
+    weather.humidity = body["main"]["humidity"]
+    weather.pressure = body["main"]["pressure"]
+    weather.description = body["weather"][0]["description"]
+    weather
+  end
+    
+end
+```
+
