@@ -559,6 +559,21 @@ Browse to <http://127.0.0.1:3000>
 I hope you've enjoyed seeing this app. It's a quick demonstration of Ruby on Rails, Test Driven Development, API access using a specialized gem (i.e. geocoder) and a generalized gem (i.e. faraday).
 
 
+### Future ideas
+
+Add functional tests, such as for flash messages, error messages, the search form, the API reachability, etc.
+
+Add internationalitzation/localization for messages and temperature units.
+
+Add deployment capabilties, such as to Heroku, or AWS, or GCP.
+
+Add continous integration and continuous delivery, such as via GitHub actions.
+
+Add styles, such as for fonts, colors, a page header, a page footer, etc.
+
+Add circuit breakers that can detect when the app load is too high to be viable for the API calls.
+
+Add API capabilties, such as returning JSON, or offering gRPC, etc.
 
 
 
