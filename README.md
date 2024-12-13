@@ -563,17 +563,17 @@ I hope you've enjoyed seeing this app. It's a quick demonstration of Ruby on Rai
 
 Add functional tests, such as for flash messages, error messages, the search form, the API reachability, etc.
 
-Add internationalitzation/localization for messages and temperature units.
+Add internationalization/localization for messages and temperature units.
 
-Add deployment capabilties, such as to Heroku, or AWS, or GCP.
+Add deployment capabilities, such as to Heroku, or AWS, or GCP.
 
-Add continous integration and continuous delivery, such as via GitHub actions.
+Add continuous integration and continuous delivery, such as via GitHub actions.
 
 Add styles, such as for fonts, colors, a page header, a page footer, etc.
 
 Add circuit breakers that can detect when the app load is too high to be viable for the API calls.
 
-Add API capabilties, such as returning JSON, or offering gRPC, etc.
+Add API capabilities, such as returning JSON, or offering gRPC, etc.
 
 
 
